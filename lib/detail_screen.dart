@@ -11,7 +11,7 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth > 800) {
+        if (constraints.maxWidth > 1200) {
           return DetailWebPage(place: place);
         } else {
           return DetailMobilePage(place: place);
@@ -79,7 +79,7 @@ class DetailMobilePage extends StatelessWidget {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      const Icon(Icons.monetization_on),
+                      const Icon(Icons.calendar_today),
                       const SizedBox(height: 8.0),
                       Text(
                         place.price,
@@ -88,19 +88,19 @@ class DetailMobilePage extends StatelessWidget {
                   ),
                   Column(
                     children: <Widget>[
-                      const Icon(Icons.star),
+                      const Icon(Icons.access_time),
                       const SizedBox(height: 8.0),
                       Text(
-                        place.rating,
+                        place.variant,
                       ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      const Icon(Icons.format_color_fill),
+                      const Icon(Icons.monetization_on),
                       const SizedBox(height: 8.0),
                       Text(
-                        place.variant,
+                        place.rating,
                       ),
                     ],
                   ),
@@ -118,7 +118,7 @@ class DetailMobilePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 150,
               child: ListView(
                 scrollDirection: Axis.horizontal,
@@ -127,14 +127,7 @@ class DetailMobilePage extends StatelessWidget {
                     padding: const EdgeInsets.all(4.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        url,
-                        errorBuilder: (context, error, stackTrace) {
-                          print('Error loading image: $error');
-                          print(stackTrace);
-                          return const SizedBox.shrink(); // Placeholder or any other widget.
-                        },
-                      ),
+                      child: Image.network(url),
                     ),
                   );
                 }).toList(),
@@ -177,13 +170,13 @@ class _DetailWebPageState extends State<DetailWebPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const Text(
-                  'MOTOR TYPE',
+                  'Wisata Bandung',
                   style: TextStyle(
                     fontFamily: 'Staatliches',
                     fontSize: 32,
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 20),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -205,7 +198,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                 scrollDirection: Axis.horizontal,
                                 children: widget.place.imageUrls.map((url) {
                                   return Padding(
-                                    padding: const EdgeInsets.all(1.0),
+                                    padding: const EdgeInsets.all(4.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(url),
@@ -218,7 +211,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 32),
+                    const SizedBox(width: 300),
                     Expanded(
                       child: Card(
                         child: Container(
@@ -270,7 +263,8 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                 ],
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
                                 child: Text(
                                   widget.place.description,
                                   textAlign: TextAlign.justify,
@@ -294,8 +288,13 @@ class _DetailWebPageState extends State<DetailWebPage> {
       ),
     );
   }
-}
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+}
 
 class FavoriteButton extends StatefulWidget {
   const FavoriteButton({Key? key}) : super(key: key);

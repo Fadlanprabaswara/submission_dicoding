@@ -75,7 +75,6 @@ class FirstScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Row with text on the left and image on the right
             Container(
               margin: EdgeInsets.all(20.0),
               padding: EdgeInsets.all(16.0),
@@ -112,7 +111,6 @@ class FirstScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // ListView.builder to dynamically create cards
             Expanded(
               child: ListView.builder(
                 itemCount: MotorTypeList.length,
